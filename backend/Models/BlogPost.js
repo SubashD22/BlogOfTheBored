@@ -32,6 +32,9 @@ const BlogPostSchema = new Schema ({
             ref: 'Comment'
         }
     ]
+},
+{
+    timestamps: true
 });
 
 const BlogPost = mongoose.model('BlogPost', BlogPostSchema );
