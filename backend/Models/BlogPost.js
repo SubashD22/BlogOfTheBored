@@ -1,42 +1,38 @@
-const mongoose = require('mongoose');
-
+const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
 
 
-const BlogPostSchema = new Schema ({
-    title:{
-        type: String,
-        required: true
-    },
-    banner:{
-        type: String,
-        required: true
-    },
-    subTitles:[
-        {   
-            image: String,
-            subTitle: String,
-            content: {
-                type:String,
-                required: true
-            }
-        }
-    ],
-    author:{
-        type: Schema.Types.ObjectId,
-        ref:'User'
-    },
-    comments:[
-        {
+const BlogPostSchema = new Schema (
+    {
+        title: {
+            type:String,
+            required:true
+        },
+        image: String,
+        text: {
+            type:String,
+            required:true
+        },
+        author:{
             type: Schema.Types.ObjectId,
-            ref: 'Comment'
-        }
-    ]
-},
-{
-    timestamps: true
-});
+            ref:'User'
+        },
+        reviews:[
+            {
+                type: Schema.Types.ObjectId,
+                ref: 'Review'
+            }
+        ]
+    },{timestamps:true}
+);
 
-const BlogPost = mongoose.model('BlogPost', BlogPostSchema );
+//BlogPost.post('findOneAndDelete', async function(doc){
+//   if(doc){
+//    await Review.deleteMany({
+//        _id: {$in: doc.reviews}
+//    })
+//   }
+//})
 
-module.exports = BlogPost
+ BlogPost = mongoose.model('BlogPost', BlogPostSchema);
+ module.exports=BlogPost
