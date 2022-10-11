@@ -11,16 +11,22 @@ const BlogPostSchema = new Schema (
         image: String,
         text: {
             type:String,
-            required:true
         },
-        author:{
-            type: Schema.Types.ObjectId,
-            ref:'User'
-        },
-        reviews:[
+        subtext:[
             {
                 type: Schema.Types.ObjectId,
-                ref: 'Review'
+                ref:'Subtext'
+            }
+        ],
+        author:{
+            type: Schema.Types.ObjectId,
+            required:true,
+            ref:'User'
+        },
+        comments:[
+            {
+                type: Schema.Types.ObjectId,
+                ref: 'Comment'
             }
         ]
     },{timestamps:true}

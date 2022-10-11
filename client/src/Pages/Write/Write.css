@@ -1,0 +1,77 @@
+.writeForm{
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 85vh;
+    overflow: scroll;
+}
+.main,.sub{
+    display: flex;
+    flex-direction: column;
+    width: 80vw;
+    margin-top: 10px;
+}
+.main-title,.main-text,.sub-text,.sub-title{
+    border: none;
+    padding: 20px;
+}
+.main-title:focus{
+    outline-style: none;
+}
+.main-text:focus{
+    outline-style: none;
+}
+.main-title{
+    font-size: 3rem;
+}
+.main-text{
+    font-size: 1.5rem;
+}
+.sub-title{
+    font-size: 2rem;
+}
+.sub-text{
+     font-size: 1.5rem;
+}
+.sub-title:focus{
+    outline-style: none;
+}
+.sub-text:focus{
+    outline-style: none;
+}
+.main-image{
+    width:80vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 10px;
+}
+.main-image img{
+    width: 1200px;;
+    height: 628px;;
+    object-fit: cover;
+}
+.main-image input,.sub-upload{
+    display: none;
+}
+.loading-main{
+    width: 60vw;
+    height: 250px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.sub-image{
+    width:50vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 10px;
+}
+.sub-image img{
+    width:30vw;
+    height: auto;
+    object-fit: cover;
+}

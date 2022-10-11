@@ -1,0 +1,19 @@
+.container{
+    background-color: #E8BB06;
+    border: 1px solid black;
+    padding: 10px;
+    margin: 10px;
+    width: 25vw;
+    height: 40vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: column;
+    box-shadow: 10px 10px   #33ab39 ;
+}
+.card-img{
+    width: 250px;
+    height:250px;
+    background-image: url('https://nyc3.digitaloceanspaces.com/memecreator-cdn/media/__processed__/ead/template-hide-the-pain-harold-938-0c6db91aec9c.jpeg');
+    background-size: cover;
+}
