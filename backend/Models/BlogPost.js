@@ -1,8 +1,9 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
+const SubText = require('./SubText')
 
 
-const BlogPostSchema = new Schema (
+const BlogPost = new Schema (
     {
         title: {
             type:String,
@@ -32,13 +33,12 @@ const BlogPostSchema = new Schema (
     },{timestamps:true}
 );
 
-//BlogPost.post('findOneAndDelete', async function(doc){
-//   if(doc){
-//    await Review.deleteMany({
-//        _id: {$in: doc.reviews}
-//    })
-//   }
-//})
+BlogPost.post('findOneAndDelete', async function(doc){
+   if(doc){
+    await SubText.deleteMany({
+        _id: {$in: doc.subtext}
+    })
+   }
+});
 
- BlogPost = mongoose.model('BlogPost', BlogPostSchema);
- module.exports=BlogPost
+ module.exports= mongoose.model('BlogPost', BlogPost);
