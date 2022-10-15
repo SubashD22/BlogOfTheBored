@@ -2,7 +2,16 @@ const asyncHandler = require('express-async-handler');
 const SubText = require('../Models/SubText');
 const BlogPost = require('../Models/BlogPost')
 
-
+const getpost = asyncHandler(async(req,res)=>{
+    const Posts = await BlogPost.find({}).populate('author','-password').sort({createdAt:-1})
+    if(Posts){
+      res.status(200).send(Posts)
+    }
+    if(!Posts){
+        res.status(404)
+        throw new Error('posts not found')
+    }
+})
 const newpost = (asyncHandler(async(req,res)=>{
     const{title,text,image,subtext} = req.body
     if(subtext){
@@ -18,7 +27,8 @@ const newpost = (asyncHandler(async(req,res)=>{
         if(post){
           res.status(200).json(post)
         }else if(!post){
-
+         res.status(400)
+         throw new Error('post not found')
         }
     }else if(!subtext){
         const post = await BlogPost.create({
@@ -29,6 +39,9 @@ const newpost = (asyncHandler(async(req,res)=>{
         });
         if(post){
             res.status(200).json(post) 
+        }else if(!post){
+            res.status(400)
+            throw new Error('post not found')
         }
     }
     
@@ -99,4 +112,4 @@ const updatepost = asyncHandler(async(req,res)=>{
     }
 })
 
-module.exports = {newpost,deletepost,updatepost}
+module.exports = {newpost,deletepost,updatepost,getpost}

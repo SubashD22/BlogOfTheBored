@@ -9,7 +9,7 @@ function NavBar() {
             </div>
             <div className="navmenu">
                 <ul>
-                    <li>Login</li>
+                    <li><Link to='/login'>Login</Link></li>
                     <li>Logout</li>
                     <li><Link to='/write'>Write</Link></li>
                     <li>Profile</li>
