@@ -2,7 +2,7 @@ const asyncHandler = require('express-async-handler');
 const SubText = require('../Models/SubText');
 const BlogPost = require('../Models/BlogPost')
 
-const getpost = asyncHandler(async(req,res)=>{
+const getposts = asyncHandler(async(req,res)=>{
     const Posts = await BlogPost.find({}).populate('author','-password').sort({createdAt:-1})
     if(Posts){
       res.status(200).send(Posts)
@@ -10,6 +10,22 @@ const getpost = asyncHandler(async(req,res)=>{
     if(!Posts){
         res.status(404)
         throw new Error('posts not found')
+    }
+})
+const getpost = asyncHandler(async(req,res)=>{
+    const id = req.params.id
+    if(id){
+    const Posts = await BlogPost.findById(id).populate('author','-password').populate('subtext')
+    if(Posts){
+      res.status(200).json(Posts)
+    }
+    if(!Posts){
+        res.status(404)
+        throw new Error('posts not found')
+    }}
+    else if(!id){
+        res.status(404)
+        throw new Error('invalid id')
     }
 })
 const newpost = (asyncHandler(async(req,res)=>{
@@ -112,4 +128,4 @@ const updatepost = asyncHandler(async(req,res)=>{
     }
 })
 
-module.exports = {newpost,deletepost,updatepost,getpost}
+module.exports = {newpost,deletepost,updatepost,getposts,getpost}

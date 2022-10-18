@@ -1,7 +1,9 @@
 import React from 'react'
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom'
 import './NavBar.css'
 function NavBar() {
+    const { user } = useSelector((state) => state.auth);
     return (
         <nav>
             <div className="logo">
@@ -12,7 +14,7 @@ function NavBar() {
                     <li><Link to='/login'>Login</Link></li>
                     <li>Logout</li>
                     <li><Link to='/write'>Write</Link></li>
-                    <li>Profile</li>
+                    <li>{user ? user.username : 'profile'}</li>
                 </ul>
             </div>
         </nav>

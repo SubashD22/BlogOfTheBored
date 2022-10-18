@@ -5,11 +5,11 @@ import { useParams } from 'react-router-dom'
 import { useState } from 'react'
 
 function FullPost() {
-    const [post, setpost] = useState
-    const { id } = useParams
+    const [post, setpost] = useState(null)
+    const { id } = useParams()
     useEffect(() => {
         const fetchpost = async () => {
-            const { data } = await axios.get('http://localhost:5000/api/posts')
+            const { data } = await axios.get(`http://localhost:5000/api/post/${id}`)
             if (data) {
                 return setpost(data)
             }
@@ -18,7 +18,14 @@ function FullPost() {
 
     }, [])
     return (
-        <div>FullPost</div>
+        <div>
+            <img src={post.image} alt="" style={{
+                width: '800px',
+                height: '400px',
+                objectFit: 'cover',
+            }} />
+            <h1>{post && post.title}</h1>
+        </div>
     )
 }
 

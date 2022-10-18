@@ -1,17 +1,25 @@
 import React from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import './Post.css'
 
 function Post({ data }) {
+    const date = new Date(data.createdAt)
+
+
+
     return (
         <div className="container">
-            <div className="card-img"
-                style={{ backgroundImage: `url(${data.image})` }}>
+            <div className='card-img' >
+                <img className='card-img' src={data.image} alt="" />
+            </div>
 
-            </div>
-            <div className="card-content" style={{ textAlign: 'center' }}>
-                <h1>{data.title}</h1>
-                <p>{data.createdAt}</p>
-            </div>
+
+            <h1>{data.title}</h1>
+            <p>{date.toDateString()}</p>
+            <button>
+                <Link to={`/post/${data._id}`}>Read Post</Link>
+            </button>
+
 
         </div>
     )
