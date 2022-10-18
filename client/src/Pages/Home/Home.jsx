@@ -4,19 +4,17 @@ import axios from 'axios'
 import NavBar from '../../Components/NavBar/NavBar'
 import Post from '../../Components/Posts/Post'
 import './Home.css'
+import { useDispatch, useSelector } from 'react-redux'
+import { getPost, postreset } from '../../redux/post/postSlice'
 
 function Home() {
-    const [posts, setposts] = useState(null);
+    const dispatch = useDispatch()
+    const { posts } = useSelector((state) => state.postStore)
     useEffect(() => {
-        const fetchpost = async () => {
-            const { data } = await axios.get('http://localhost:5000/api/posts')
-            if (data) {
-                return setposts(data)
-            }
-        };
-        fetchpost()
+        dispatch(getPost());
+        return () => dispatch(postreset())
 
-    }, [])
+    }, [dispatch])
 
     return (
         <>

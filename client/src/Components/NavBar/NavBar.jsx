@@ -1,9 +1,16 @@
 import React from 'react'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom'
+import { logout, reset } from '../../redux/auth/authSlice'
 import './NavBar.css'
 function NavBar() {
     const { user } = useSelector((state) => state.auth);
+    const dispatch = useDispatch();
+
+    const logoutfn = () => {
+        dispatch(logout());
+        dispatch(reset());
+    }
     return (
         <nav>
             <div className="logo">
@@ -11,10 +18,12 @@ function NavBar() {
             </div>
             <div className="navmenu">
                 <ul>
-                    <li><Link to='/login'>Login</Link></li>
-                    <li>Logout</li>
+                    {user ? <li onClick={logoutfn}>Logout</li> :
+                        <li><Link to='/login'>Login</Link></li>}
+
+
                     <li><Link to='/write'>Write</Link></li>
-                    <li>{user ? user.username : 'profile'}</li>
+                    <li>{user ? user.username : null}</li>
                 </ul>
             </div>
         </nav>

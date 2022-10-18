@@ -1,30 +1,27 @@
 import React from 'react'
-import axios from 'axios'
 import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { getsinglePost, postreset } from '../../redux/post/postSlice'
 
 function FullPost() {
-    const [post, setpost] = useState(null)
+    const { singlePost } = useSelector((state) => state.postStore)
+    const dispatch = useDispatch()
     const { id } = useParams()
     useEffect(() => {
-        const fetchpost = async () => {
-            const { data } = await axios.get(`http://localhost:5000/api/post/${id}`)
-            if (data) {
-                return setpost(data)
-            }
-        };
-        fetchpost()
-
+        dispatch(getsinglePost(id))
+        return () => {
+            dispatch(postreset())
+        }
     }, [])
     return (
         <div>
-            <img src={post.image} alt="" style={{
+            <img src={singlePost && singlePost.image} alt="" style={{
                 width: '800px',
                 height: '400px',
                 objectFit: 'cover',
             }} />
-            <h1>{post && post.title}</h1>
+            <h1>{singlePost && singlePost.title}</h1>
         </div>
     )
 }
