@@ -2,7 +2,8 @@ import React from 'react'
 import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { getsinglePost, postreset } from '../../redux/post/postSlice'
+import { getsinglePost, postreset } from '../../redux/post/postSlice';
+import './FullPost.css'
 
 function FullPost() {
     const { singlePost } = useSelector((state) => state.postStore)
@@ -15,14 +16,14 @@ function FullPost() {
         }
     }, [])
     return (
-        <div>
+        <article>
             <img src={singlePost && singlePost.image} alt="" style={{
                 width: '800px',
                 height: '400px',
                 objectFit: 'cover',
             }} />
             <h1>{singlePost && singlePost.title}</h1>
-        </div>
+        </article>
     )
 }
 
