@@ -10,6 +10,7 @@ const BlogPost = new Schema (
             required:true
         },
         image: String,
+        imageId: String,
         text: {
             type:String,
         },

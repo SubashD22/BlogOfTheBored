@@ -48,14 +48,18 @@
     justify-content: space-around;
     padding: 10px;
 }
-.main-image img{
-    width: 1200px;;
-    height: 628px;;
-    object-fit: cover;
-}
-.main-image input,.sub-upload{
+.main-image input{
     display: none;
 }
+.mainimage-container{
+    width: auto;
+}
+.main-image img{
+    width: 1200px;
+    height: 628px;
+    object-fit: cover;
+}
+
 .loading-main{
     width: 60vw;
     height: 250px;
@@ -70,8 +74,9 @@
     justify-content: space-around;
     padding: 10px;
 }
+
 .sub-image img{
     width:30vw;
-    height: auto;
+    height: 15vw;
     object-fit: cover;
 }

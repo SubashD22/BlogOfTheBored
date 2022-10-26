@@ -1,192 +1,158 @@
-import React, { useState } from 'react';
-import { useEffect } from 'react';
-import { RotatingLines } from 'react-loader-spinner';
-import { FaRegArrowAltCircleUp } from 'react-icons/fa'
-import { BsFillXCircleFill } from "react-icons/bs";
 import axios from 'axios';
+import React, { useState } from 'react'
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import './Write.css'
 
-
-function Write() {
-    const [loading, setLoading] = useState(false)
+function Writedemo() {
+    const navigate = useNavigate()
+    const { user } = useSelector((state) => state.auth)
+    useEffect(() => {
+        if (!user) {
+            navigate('/login')
+        }
+    }, [])
+    const token = user.token
+    const [loading, setloading] = useState(false)
     const [postData, setPostData] = useState({
-        title: '',
-        text: '',
-        image: '',
-        public_id: ''
+        mainTitle: '',
+        mainText: '',
+        mainImage: '',
     })
-    const { title, text } = postData;
-    const mainOnchange = (e) => {
-        setPostData((prevData) => ({
-            ...prevData,
-            [e.target.name]: e.target.value
-        }))
-    }
+    const { title, text, image } = postData
     const [subTextdata, setSubtextData] = useState([
         {
             id: 1,
             subTitle: '',
-            text: '',
-            image: '',
-            image_id: ''
+            subText: '',
+            subImage: '',
         }
-    ])
+    ]);
+    const mainOnchange = (e, type) => {
+        const value = type === 'image' ? e.target.files[0] : e.target.value
+        setPostData((prevData) => ({
+            ...prevData,
+            [e.target.name]: value
+        }))
+    }
     const addSubtext = (e) => {
         e.preventDefault()
-        const newSubtext = [
-            ...subTextdata,
-            {
-                id: subTextdata.length + 1,
-                subTitle: '',
-                text: '',
-                image: '',
-                public_id: ''
-            }
-        ];
-        setSubtextData(newSubtext)
-    }
-    const handleChange = (e, subtext) => {
+        if (subTextdata[subTextdata.length - 1].subTitle !== '' || subTextdata[subTextdata.length - 1].subText !== '') {
+
+            const newSubtext = [
+                ...subTextdata,
+                {
+                    id: subTextdata.length + 1,
+                    subTitle: '',
+                    subText: '',
+                    subImage: '',
+                }
+            ];
+            setSubtextData(newSubtext)
+        } else alert('please fill previous subtext fields')
+
+    };
+    const handleChange = (e, subtext, type) => {
+        const value = type === 'image' ? e.target.files[0] : e.target.value
         setSubtextData(prevData =>
             prevData.map(obj => {
                 if (obj.id === subtext.id) {
-                    return { ...obj, [e.target.name]: e.target.value }
+                    return { ...obj, [e.target.name]: value }
                 }
                 return obj
             }))
     }
-    const uploadImage = async (e) => {
-        setLoading(true)
-        const formdata = new FormData();
-        formdata.append('file', e.target.files[0])
-        formdata.append('upload_preset', 'vvt9zrms')
-        const { data } = await axios.post('https://api.cloudinary.com/v1_1/drsavv8ma/image/upload', formdata)
-        if (data) {
-            const newdata = {
-                ...postData,
-                image: data.url,
-                public_id: data.public_id
-            }
-            console.log(newdata)
-            setLoading(false)
-            return setPostData(newdata);
-        }
-    }
-    const uploadsubImage = async (e, subtext) => {
-        const formdata = new FormData();
-        formdata.append('file', e.target.files[0])
-        formdata.append('upload_preset', 'vvt9zrms')
-        const { data } = await axios.post('https://api.cloudinary.com/v1_1/drsavv8ma/image/upload', formdata)
-        if (data) {
-            setSubtextData(prevData =>
-                prevData.map(obj => {
-                    if (obj.id === subtext.id) {
-                        return {
-                            ...obj,
-                            image: data.url,
-                            public_id: data.public_id
-                        }
-                    }
-                    return obj
-                }))
-        }
-    }
-    const delTimg = async (e) => {
+    const publish = async (e) => {
         e.preventDefault();
-        setLoading(true)
-        const data = {
-            public_id: postData.public_id
-        }
-        const response = await axios.post('http://localhost:5000/api/delete', data)
-        if (response.status === 200) {
-            const newdata = {
-                ...postData,
-                image: '',
-                public_id: ''
+        setloading(true);
+        const formData = new FormData
+        if (subTextdata[0].subTitle !== '' || subTextdata[0].subText !== '') {
+            for (let key in postData) {
+                formData.append(key, postData[key])
             }
-            console.log(newdata)
-            setPostData(newdata);
-            setLoading(false)
+            subTextdata.forEach((sb) => {
+                formData.append('subImage', sb.subImage)
+                const subData = JSON.stringify({
+                    subTitle: sb.subTitle,
+                    subText: sb.subText
+                })
+                formData.append('subData', subData)
+            })
+
+        } else {
+            for (let key in postData) {
+                formData.append(key, postData[key])
+            }
+        };
+        console.log(formData)
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            }
+        }
+        const response = await axios.post('http://localhost:5000/api/newpost', formData, config)
+        if (response) {
+            navigate(`/post/${response.data}`)
         }
     }
-    const delSubimg = async (e, subText) => {
+    const Deleteform = (e, id) => {
         e.preventDefault();
-        const data = {
-            public_id: subText.public_id
-        }
-        const response = await axios.post('http://localhost:5000/api/delete', data);
-        if (response.status === 200) {
-            setSubtextData(prevData =>
-                prevData.map(obj => {
-                    if (obj.id === subText.id) {
-                        return {
-                            ...obj,
-                            image: "",
-                            public_id: ""
-                        }
-                    }
-                    return obj
-                }))
-        }
-
-
+        const newdata = subTextdata.filter((s) => s.id !== id);
+        setSubtextData(newdata)
     }
-    let imageSrc;
-    if (postData.image !== "") {
-        imageSrc = postData.image
-    } else {
-        imageSrc = "https://fakeimg.pl/1920x1080/"
-    }
-    const subimgsrc = "https://fakeimg.pl/1200x900/"
+    let dis
+    if (loading) {
+        dis = true
+    } else dis = false
     return (
         <>
 
-            <form className='writeForm'>
+            <form className='writeForm' onSubmit={publish}>
                 <div className="main-image">
-                    <label htmlFor='main-image'
-                        style={{
-                            display: `${postData.image !== "" ? 'none' : 'block'}`
-                        }}><FaRegArrowAltCircleUp /></label>
-                    <input type="file" name="image" id="main-image" onChange={uploadImage} />
-                    {loading === true ? <div className='loading-main'><RotatingLines /></div> : <img src={imageSrc}></img>}
+                    <label htmlFor='main-image'>Upload</label>
+                    <input type="file" name="mainImage" id="main-image" onChange={(e) => mainOnchange(e, 'image')} disabled={dis} />
+                    <div className="mainimage-container">
+                        <img src={postData.mainImage !== '' ? URL.createObjectURL(postData.mainImage) : null} alt="" />
+                    </div>
 
-                    <button style={{
-                        display: `${postData.image !== "" ? 'block' : 'none'}`
-                    }} onClick={delTimg}><BsFillXCircleFill /></button>
                 </div>
                 <div className='main'>
-                    <input type='text' name='title' value={title} onChange={mainOnchange} className='main-title' placeholder='Title' />
-                    <textarea name="text" id="text" value={text} onChange={mainOnchange} className='main-text' placeholder='Content...' />
+                    <input type='text' name='mainTitle' value={title} onChange={(e) => mainOnchange(e, 'string')} className='main-title' placeholder='Title' required disabled={dis} />
+                    <textarea name="mainText" id="text" value={text} onChange={(e) => mainOnchange(e, 'string')} className='main-text' placeholder='Content...' required disabled={dis} />
                 </div>
 
-                {subTextdata.map((subText) => (
-                    <div key={subText.id} className='sub'>
-                        <input type='text' value={subText.subTitle} name='subTitle' onChange={(e) => handleChange(e, subText)} placeholder='Sub Title' className='sub-title' />
-                        <div className="sub-image">
-                            <label htmlFor={`sub-upimage${subText.id}`}
-                                style={{
-                                    display: `${subText.image !== "" ? 'none' : 'block'}`
-                                }}>
-                                <FaRegArrowAltCircleUp />
-                            </label>
-                            <input type="file" name="image" id={`sub-upimage${subText.id}`} className='sub-upload' onChange={(e) => uploadsubImage(e, subText)} />
-                            <img src={subText.image === '' ? subimgsrc : subText.image}></img>
-                            <button onClick={(e) => delSubimg(e, subText)}
-                                style={{
-                                    display: `${subText.image !== "" ? 'block' : 'none'}`
-                                }}>Delete</button>
+                {subTextdata.map((subText) => {
+                    let required;
+                    if (subText.subImage !== '' || subText.id !== 1) {
+                        required = true
+                    } else required = false
+                    let imagereq;
+                    if (subTextdata[subTextdata.length - 1].subImage !== '') { imagereq = true } else imagereq = false
+                    return (
+                        <div key={subText.id} className='sub'>
+                            <input type='text' value={subText.subTitle} name='subTitle' onChange={(e) => handleChange(e, subText)} placeholder='Sub Title' className='sub-title'
+                                required={required} disabled={dis} />
+                            <div className="sub-image">
+                                <label htmlFor={`sub-upimage${subText.id}`}>
+                                    Upload
+                                </label>
+                                <input type="file" name="subImage" id={`sub-upimage${subText.id}`} className='sub-upload' onChange={(e) => handleChange(e, subText, 'image')} required={imagereq} disabled={dis} />
+                            </div>
+                            <textarea value={subText.text} name='subText' onChange={(e) => handleChange(e, subText)} placeholder='content...' className='sub-text' required={required} disabled={dis} />
+                            {subText.id !== 1 ? <button onClick={(e) => Deleteform(e, subText.id)} disabled={dis}>Delete</button> : null}
                         </div>
-                        <textarea value={subText.text} name='text' onChange={(e) => handleChange(e, subText)} placeholder='content...' className='sub-text' />
-                    </div>
-                ))}
-                <button onClick={addSubtext}>Add SubText</button>
+                    )
+                })}
+                <button onClick={addSubtext} disabled={dis}>Add SubText</button>
                 <div style={{
                     marginTop: '10px'
                 }}>
-                    <button type='submit'>Publish</button>
+                    <button type='submit' disabled={dis}>Publish</button>
                 </div>
             </form>
         </>
     )
 }
 
-export default Write
+export default Writedemo

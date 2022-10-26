@@ -3,6 +3,7 @@ const express = require('express');
 const mongooose = require('mongoose');
 const cors = require('cors')
 const del = require('./routes/delete')
+const bodyParser = require('body-parser')
 require('dotenv').config();
 const PORT = process.env.PORT
 const db = process.env.MONGO_URI;
@@ -13,7 +14,7 @@ mongooose.connect(db,{ useNewUrlParser: true, useUnifiedTopology: true })
 
 const app = express();
 app.use(express.json());
-app.use(express.urlencoded({extended:true}));
+app.use(express.urlencoded({extended:true}));;
 app.use(function(req, res, next) {
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader("Access-Control-Allow-Credentials", "true");
@@ -27,7 +28,6 @@ res.send('hello')
 app.use('/', del)
 app.use('/api',require('./routes/User'))
 app.use('/api',require('./routes/BlogPost'))
-app.use('/api',require('./routes/imagetest'))
 app.listen(PORT,()=>{
     console.log(`connected to localhost:${PORT}`)
 })

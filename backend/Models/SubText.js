@@ -8,6 +8,7 @@ const SubtextSchema = new Schema (
             type:String,
         },
         image: String,
+        imageId: String,
         text: {
             type:String,
         },
