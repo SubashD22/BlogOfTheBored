@@ -1,34 +1,29 @@
-import React, { useEffect } from 'react'
-import { useState } from 'react'
-import axios from 'axios'
-import NavBar from '../../Components/NavBar/NavBar'
+import React from 'react'
 import Post from '../../Components/Posts/Post'
-import './Home.css'
-import { useDispatch, useSelector } from 'react-redux'
-import { getPost, postreset } from '../../redux/post/postSlice'
+import styles from './Home.module.css'
+
+import { useGetPostsData } from '../../hooks/useGetPost'
 
 function Home() {
-    const dispatch = useDispatch()
-    const { posts } = useSelector((state) => state.postStore)
-    useEffect(() => {
-        dispatch(getPost());
-        return () => dispatch(postreset())
-
-    }, [dispatch])
+    const { isLoading, data, isError, error } = useGetPostsData()
 
     return (
         <>
-            <header>
-                <h1>Welcome to Blog of the Bored</h1>
-                <p> to fuel your boredom furthermore</p>
-            </header>
-            <section>
-                <h2> Recent Posts </h2>
-                <div className="posts">
-                    {posts && posts.slice(0, 3).map(p => {
-                        return <Post data={p} key={p._id} />
-                    })}
+            <section className={styles.home}>
+                <div className={styles.hometext}>
+                    <h1 className={styles.hometitle}>THE BLOG</h1>
+                    <span className={styles.homesub}> That shouldn't have took 2 months to build </span>
                 </div>
+            </section >
+            <section className={styles.recentposts}>
+                <h2> Recent Posts </h2>
+                <section className={styles.posts}>
+                    {data?.data.map(p => {
+                        return (<><Post data={p} key={p._id} />
+                            <Post data={p} key={p._id} />
+                            <Post data={p} key={p._id} /></>)
+                    })}
+                </section>
 
             </section>
         </>

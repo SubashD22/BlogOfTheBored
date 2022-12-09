@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import './Post.css'
+import styles from './Post.module.css'
 
 function Post({ data }) {
     const date = new Date(data.createdAt)
@@ -8,19 +8,14 @@ function Post({ data }) {
 
 
     return (
-        <div className="container">
-            <div className='card-img' >
-                <img className='card-img' src={data.image} alt="" />
+        <div className={styles.post}>
+            <img className={styles.postimg} src={data.image} alt="" />
+            <Link to={`/post/${data._id}`} className={styles.posttitle}>{data.title}</Link>
+            <p className={styles.postdate}>{date.toDateString()}</p>
+            <div className={styles.profile}>
+                <img src={data.author.profilePic} alt="" className={styles.profileimg} />
+                <span className={styles.profilename}>{data.author.username}</span>
             </div>
-
-
-            <h1>{data.title}</h1>
-            <p>{date.toDateString()}</p>
-            <button>
-                <Link to={`/post/${data._id}`}>Read Post</Link>
-            </button>
-
-
         </div>
     )
 }

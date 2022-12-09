@@ -1,0 +1,31 @@
+.commentthread {
+    width: 700px;
+    max-width: 100%;
+    margin: auto;
+    padding: 0 30px;
+    background-color: #fff;
+    border: 1px solid;
+    overflow: scroll
+}
+.m0 {
+    margin: 0;
+}
+.comment {
+    position: relative;
+    margin: 20px auto;
+}
+.commentheading {
+    display: flex;
+    align-items: center;
+    height: 50px;
+    font-size: 14px;
+}
+.commentinfo {
+    color: rgba(0, 0, 0, 0.5);
+    margin-left: 10px;
+}
+.commentauthor {
+    color: rgba(0, 0, 0, 0.85);
+    font-weight: bold;
+    text-decoration: none;
+}

@@ -39,8 +39,8 @@ function LoginForm() {
         <div className='formcontent'>
             <h1 className='formTitle'>LOGIN</h1>
             <form onSubmit={submit}>
-                <input type="text" name="username" value={username} onChange={onChange} placeholder='Username' />
-                <input type="password" name="password" value={password} onChange={onChange} placeholder='Password' />
+                <input type="text" name="username" value={username} onChange={onChange} placeholder='Username' required />
+                <input type="password" name="password" value={password} onChange={onChange} placeholder='Password' required />
                 <button type='submit'>Sign in</button>
             </form>
         </div>

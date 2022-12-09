@@ -4,18 +4,15 @@ const router = express.Router();
 const protect =require('../middleware/authMiddleware');
 const {parser} = require('../cloudinary/config');
 
-router.post('/newpost',protect,parser.fields([
-    {
-        name: "mainImage", maxCount:1
-    },
-    {
-        name: "subImage"
-    }
-]),newpost);
 router.get('/posts',getposts)
 router.get('/post/:id',getpost)
+router.post('/newpost',protect,parser.fields([
+    {name:'Image',maxCount:1}
+]),newpost)
 router.delete('/delete/:id',protect,deletepost)
-router.put('/update/:id',protect,updatepost)
+router.put('/update/:id',protect,parser.fields([
+    {name:'Image',maxCount:1}
+]),updatepost)
 
 
 module.exports = router

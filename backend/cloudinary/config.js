@@ -15,6 +15,13 @@ const storage = new CloudinaryStorage({
         folder:"BlogoftheBored"
     }
 });
+const Dpstorage = new CloudinaryStorage({
+    cloudinary: cloudinary,
+    params:{
+        folder:"BlogoftheBored/Dp"
+    }
+});
 const parser = multer({storage:storage});
+const Dpparser = multer({storage:Dpstorage});
 
-module.exports = {cloudinary,parser}
+module.exports = {cloudinary,parser,Dpparser}

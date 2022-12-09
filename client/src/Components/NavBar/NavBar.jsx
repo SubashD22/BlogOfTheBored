@@ -2,7 +2,7 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom'
 import { logout, reset } from '../../redux/auth/authSlice'
-import './NavBar.css'
+import styles from './NavBar.module.css'
 function NavBar() {
     const { user } = useSelector((state) => state.auth);
     const dispatch = useDispatch();
@@ -13,17 +13,17 @@ function NavBar() {
     }
     return (
         <nav>
-            <div className="logo">
+            <div className={styles.logo}>
                 <h1><Link to='/'>B.o.B</Link></h1>
             </div>
-            <div className="navmenu">
+            <div className={styles.navmenu}>
                 <ul>
-                    {user ? <li onClick={logoutfn}>Logout</li> :
-                        <li><Link to='/login'>Login</Link></li>}
-
-
-                    <li><Link to='/write'>Write</Link></li>
-                    <li>{user ? user.username : null}</li>
+                    {user ? <li className={styles.navBtn} onClick={logoutfn} >Logout</li> :
+                        <li className={styles.navBtn} ><Link to='/login' >Login</Link></li>}
+                    {user ? <li className={styles.navBtn} ><Link to='/write' >Write</Link></li> :
+                        <></>}
+                    {user ? <li className={styles.navBtn} ><p>{user ? user.username : null}</p></li> :
+                        <></>}
                 </ul>
             </div>
         </nav>

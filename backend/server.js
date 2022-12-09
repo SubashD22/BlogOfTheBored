@@ -27,7 +27,9 @@ res.send('hello')
 })
 app.use('/', del)
 app.use('/api',require('./routes/User'))
-app.use('/api',require('./routes/BlogPost'))
+app.use('/api',require('./routes/BlogPost'));
+app.use('/api',require('./routes/Comments'));
+
 app.listen(PORT,()=>{
     console.log(`connected to localhost:${PORT}`)
 })

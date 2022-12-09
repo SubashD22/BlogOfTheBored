@@ -1,0 +1,54 @@
+.home{
+    width: 100%;
+    max-width: 1068px;
+    height: 440px;
+    margin: auto;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    background-image: url("https://wallpaperforu.com/wp-content/uploads/2021/11/Wallpaper-Humor-Meme-Alien-Comics-Minimalist67-1536x648.jpg");
+    background-position: 45%,55%;
+    background-repeat: no-repeat;
+    background-color: #f987a2
+}
+.hometext{
+    text-align: center;
+}
+.hometitle{
+    font-size: 2.5rem;
+}
+.homesub{
+    font-size: 1rem;
+    font-weight: 400;
+}
+.recentposts{
+    width: 100%;
+    padding: 1rem;
+    max-width: 1068px;
+    margin: 0 auto;
+    height: 60vh;
+    background-color: #e53909;
+    overflow: hidden;
+}
+.recentposts h2{
+  text-align: center;
+}
+.posts{
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(280px,auto));
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+}
+@media (max-width:480px) {
+    .home{
+       height: 20vh
+    }
+    section{
+        height: 60vh;
+    }
+    .posts{
+        height: 55.2vh;
+        overflow: scroll;
+    }
+}

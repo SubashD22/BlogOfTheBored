@@ -2,10 +2,10 @@ import React from 'react'
 import { useState } from 'react'
 import LoginForm from '../../Components/LoginForm';
 import RegisterForm from '../../Components/RegisterForm';
-import './Login.css'
+import style from './Login.module.css'
 
 function Login() {
-    const [formtype, setFormType] = useState('login')
+    const [formtype, setFormType] = useState('Login')
     const changetoReg = () => {
         setFormType('Register')
     };
@@ -20,10 +20,10 @@ function Login() {
     }
 
     return (
-        <div className="form">
-            <div className="formbody">
+        <div className={style.form}>
+            <div className={style.formbody}>
                 {formtype === 'Login' ? <LoginForm /> : <RegisterForm />}
-                <div className="formfooter">
+                <div className={style.formfooter}>
                     {changeForm}
                 </div>
             </div>

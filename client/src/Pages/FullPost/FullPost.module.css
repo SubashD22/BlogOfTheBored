@@ -1,0 +1,81 @@
+.postcontainer{
+    width: 100%;
+    max-width: 1068px;
+    margin: auto;
+}
+.postheader{
+    background-color: #e8bb06;
+    padding: 1rem 0 0rem;
+}
+.headercontent{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.postcontent{
+    margin-top: 10rem;
+    overflow: scroll;
+}
+.postcontent h1,h2,h3,h4,h5,h6{
+    margin: 0.1rem 0;
+    font-size: 1.2rem;
+}
+.postcontent p {
+    font-size: 1rem;
+    line-height: 1rem;
+    margin: 1rem 0;
+}
+
+.title{
+    width: 90%;
+    text-align: center;
+    font-size: 2.6rem;
+    margin-bottom: 1rem;
+}
+.headerimg{
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    object-position: center;
+}
+.postinfo{
+    display: flex;
+    padding: 0.5rem;
+    justify-content: space-between;
+}
+
+
+.maintext{
+    width: 100%;
+}
+.maintext p br{
+  display: none;
+}
+.maintext img{
+    width:100%;
+    height: auto;
+    margin:0 auto;
+}
+.commentcontent{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+.commentcontent h2{
+    text-align: center;
+}
+.commentform{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+.commentform textarea{
+    width: 50%;
+    margin-right: 2rem;
+    font-size: large;
+}
+.commentform button{
+    font-weight: 600;
+}

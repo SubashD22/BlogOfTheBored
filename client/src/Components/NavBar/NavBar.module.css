@@ -1,0 +1,46 @@
+nav{
+    display: flex;
+    max-width: 1068px;
+    width: 100%;
+    margin: 0 auto  ;
+    justify-content: space-between;
+    align-items: center;
+    background-color: aquamarine;
+}
+nav .logo{
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+.navBtn{
+    padding: 8px 14px;
+    font-weight: 500;
+    background-color: #33AB39;
+    color: black;
+}
+    
+ul{
+    list-style: none;
+    display: flex;
+    flex-grow: 1;
+    ;
+}
+li{
+margin :10px
+}
+@media (max-width:480px) {
+    nav{
+        flex-direction: column;
+        height: 10vh;
+    }
+    nav .logo{
+        font-size: 1rem;
+    }
+    .navBtn{
+        padding: 4px 7px;
+    }
+    .navmenu{
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+    }
+}

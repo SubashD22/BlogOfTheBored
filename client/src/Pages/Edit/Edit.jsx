@@ -1,29 +1,28 @@
-import axios from 'axios';
-import React, { useMemo, useRef, useState } from 'react'
-import { useEffect } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useSinglePostData } from '../../hooks/useSinglePostData';
 import ReactQuill from 'react-quill'
 import 'react-quill/dist/quill.snow.css';
-import style from './Write.module.css'
+import axios from 'axios';
 
-function Write() {
-    const navigate = useNavigate()
-    const { user } = useSelector((state) => state.auth)
+const Edit = () => {
+    const { user } = useSelector((state) => state.auth);
+    const navigate = useNavigate();
     useEffect(() => {
         if (!user) {
             navigate('/login')
         }
     }, [])
-
-    const token = user.token
+    const { id } = useParams();
+    const { isLoading, isError, error, data } = useSinglePostData(id)
     const [loading, setloading] = useState(false)
     const [postData, setPostData] = useState({
-        Title: '',
+        Title: `${data?.data.title}`,
         Image: '',
     })
     const [images, setImages] = useState([])
-    const [value, setValue] = useState('');
+    const [value, setValue] = useState(`${data?.data.text}`);
     useEffect(() => {
         console.log(value)
     }, [value])
@@ -50,10 +49,10 @@ function Write() {
             ;
         const config = {
             headers: {
-                Authorization: `Bearer ${token}`,
+                Authorization: `Bearer ${user.token}`,
             }
         }
-        const response = await axios.post('http://localhost:5000/api/newpost', formData, config)
+        const response = await axios.put(`http://localhost:5000/api/update/${id}`, formData, config)
         if (response) {
             navigate(`/post/${response.data}`)
         }
@@ -104,28 +103,32 @@ function Write() {
     if (loading) {
         dis = true
     } else dis = false
+    if (isLoading) {
+        return (
+            <div>Loading...</div>
+        )
+    }
     return (
         <>
 
-            <form className={style.writeForm} onSubmit={publish}>
-                <div className={style.mainimage}>
+            <form className='writeForm' onSubmit={publish}>
+                <div className="main-image">
+                    <label htmlFor='main-image'>Upload</label>
                     <input type="file" name="Image" id="main-image" onChange={(e) => mainOnchange(e, 'image')} disabled={dis} />
-                    <div className={style.mainimagecontainer}>
-                        <img src={postData.Image !== '' ? URL.createObjectURL(postData.Image) : null} alt="" />
+                    <div className="mainimage-container">
+                        <img src={postData.Image !== '' ? URL.createObjectURL(postData.Image) : data?.data.image} alt="" />
                     </div>
-                    <label className={style.upbtn} htmlFor='main-image'>Upload</label>
+
                 </div>
-                <div className={style.main}>
-                    <input type='text' name='Title' value={Title} onChange={(e) => mainOnchange(e, 'string')} className={style.maintitle} placeholder='Title' required disabled={dis} />
-                </div>
-                <div>
+                <div className='main'>
+                    <input type='text' name='Title' value={Title} onChange={(e) => mainOnchange(e, 'string')} className='main-title' placeholder='Title' required disabled={dis} />
                     <ReactQuill ref={quillRef} value={value} name='Text' onChange={setValue} placeholder='content...' modules={modules} />
                 </div>
                 <div style={{
                     marginTop: '10px',
                     zIndex: 999
-                }} className={style.submit}>
-                    <button type='submit' disabled={dis} className={style.submit}>Publish</button>
+                }}>
+                    <button type='submit' disabled={dis}>Publish</button>
                 </div>
 
             </form>
@@ -134,5 +137,4 @@ function Write() {
     )
 }
 
-
-export default Write
+export default Edit

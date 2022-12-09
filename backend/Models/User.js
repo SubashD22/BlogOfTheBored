@@ -20,6 +20,10 @@ const userSchema = mongoose.Schema({
         required:true,
         default:"https://i.pinimg.com/originals/29/1c/ab/291cabe685fb6dbbd1139dde967499b4.jpg"
     },
+    picId:{
+        type:String,
+        required:true
+    }
 },{timestamps:true})
 
 const User = mongoose.model('User',userSchema)

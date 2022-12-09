@@ -29,7 +29,7 @@ input, button{
     width: fit-content;
     font-size: large;
 }
-button{
+.button{
     margin-left: auto;
     margin-right: auto;
     width:100px;
@@ -48,4 +48,17 @@ input{
 }
 input:focus{
     outline: none;
+}
+.profilePic input{
+    display: none;
+}
+.dpcontainer{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 5px solid black;
+    margin: 0 auto
+}
+.dpImg{
+    border-radius: 50%;
 }
