@@ -9,6 +9,7 @@ import FullPost from "./Pages/FullPost/FullPost";
 import User from "./Pages/User/User";
 import Edit from "./Pages/Edit/Edit";
 import Footer from "./Components/Footer/Footer";
+import Allpost from "./Pages/allposts/Allpost";
 const queryClient = new QueryClient()
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
         <Route path="/post/:id" element={<FullPost/>}/>
         <Route path="/edit/:id" element={<Edit/>}/>
         <Route path="/user" element={<User/>}/>
+        <Route path="/posts" element={<Allpost/>}/>
       </Routes>
       <Footer/>
     </Router>

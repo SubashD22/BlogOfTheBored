@@ -12,6 +12,16 @@ const getposts = asyncHandler(async(req,res)=>{
         throw new Error('posts not found')
     }
 })
+const getallposts = asyncHandler(async(req,res)=>{
+    const Posts = await BlogPost.find({}).populate('author','-password')
+    if(Posts){
+      res.status(200).send(Posts)
+    }
+    if(!Posts){
+        res.status(404)
+        throw new Error('posts not found')
+    }
+})
 const getpost = asyncHandler(async(req,res)=>{
     const id = req.params.id
     
@@ -132,4 +142,4 @@ const updatepost = asyncHandler(async(req,res)=>{
 }
 })
 
-module.exports = {newpost,deletepost,updatepost,getposts,getpost}
+module.exports = {newpost,deletepost,updatepost,getposts,getpost,getallposts}

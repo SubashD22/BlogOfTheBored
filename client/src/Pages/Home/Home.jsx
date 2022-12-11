@@ -20,8 +20,7 @@ function Home() {
                 <section className={styles.posts}>
                     {data?.data.map(p => {
                         return (<><Post data={p} key={p._id} />
-                            <Post data={p} key={p._id} />
-                            <Post data={p} key={p._id} /></>)
+                        </>)
                     })}
                 </section>
 

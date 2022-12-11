@@ -93,12 +93,7 @@ function FullPost() {
                     {comments ? <Comments comments={comments?.data} refetch={refetch} /> : <></>}
                 </div>
             </section>
-
-
-
         </div>
-
-
     )
 }
 

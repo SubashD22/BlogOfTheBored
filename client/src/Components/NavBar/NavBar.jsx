@@ -20,6 +20,7 @@ function NavBar() {
                 <ul>
                     {user ? <li className={styles.navBtn} onClick={logoutfn} >Logout</li> :
                         <li className={styles.navBtn} ><Link to='/login' >Login</Link></li>}
+                    <li className={styles.navBtn} ><Link to='/posts' >All Posts</Link></li>
                     {user ? <li className={styles.navBtn} ><Link to='/write' >Write</Link></li> :
                         <></>}
                     {user ? <li className={styles.navBtn} ><p>{user ? user.username : null}</p></li> :

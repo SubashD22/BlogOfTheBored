@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { login, reset } from '../redux/auth/authSlice'
+import style from '../Pages/Login/Login.module.css'
 
 function LoginForm() {
     const [formData, setformdata] = useState({
@@ -41,7 +42,7 @@ function LoginForm() {
             <form onSubmit={submit}>
                 <input type="text" name="username" value={username} onChange={onChange} placeholder='Username' required />
                 <input type="password" name="password" value={password} onChange={onChange} placeholder='Password' required />
-                <button type='submit'>Sign in</button>
+                <button type='submit' className={style.button}>Sign in</button>
             </form>
         </div>
     )

@@ -1,10 +1,11 @@
 const express = require('express');
-const { newpost,deletepost,updatepost,getposts,getpost } = require('../controllers/blogpostcontroller');
+const { newpost,deletepost,updatepost,getposts,getpost,getallposts } = require('../controllers/blogpostcontroller');
 const router = express.Router();
 const protect =require('../middleware/authMiddleware');
 const {parser} = require('../cloudinary/config');
 
 router.get('/posts',getposts)
+router.get('/allposts',getallposts)
 router.get('/post/:id',getpost)
 router.post('/newpost',protect,parser.fields([
     {name:'Image',maxCount:1}
