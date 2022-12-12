@@ -12,10 +12,10 @@ const Allpost = () => {
     const [filter, setFilter] = useState('allpost')
 
     const selectedCategory = (e) => {
+        console.log(e.target.value)
         setFilter(e.target.value)
     };
     const filteredPost = data?.data.filter(f => f.categories.includes(filter))
-    console.log(filteredPost)
     let postSection = filter === 'allpost' ? (data?.data.map(p => {
         return (<Post data={p} key={p._id} />
         )
@@ -27,7 +27,7 @@ const Allpost = () => {
     return (
         <div>
             <select name="Category" id="Category" onChange={selectedCategory}>
-                <option value="allpost" selected>All Post</option>
+                <option value="allpost" selected multiple>All Post</option>
                 <option value="fashion">fashion</option>
                 <option value="food">food</option>
                 <option value="games">games</option>

@@ -47,6 +47,7 @@
 
 .maintext{
     width: 100%;
+    word-wrap: break-word;
 }
 .maintext p br{
   display: none;
@@ -75,6 +76,7 @@
     width: 50%;
     margin-right: 2rem;
     font-size: large;
+    padding: 5px;
 }
 .commentform button{
     font-weight: 600;

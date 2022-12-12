@@ -23,7 +23,7 @@ function NavBar() {
                     <li className={styles.navBtn} ><Link to='/posts' >All Posts</Link></li>
                     {user ? <li className={styles.navBtn} ><Link to='/write' >Write</Link></li> :
                         <></>}
-                    {user ? <li className={styles.navBtn} ><p>{user ? user.username : null}</p></li> :
+                    {user ? <li className={styles.navBtn} ><Link to='/user'>{user ? user.username : null}</Link></li> :
                         <></>}
                 </ul>
             </div>

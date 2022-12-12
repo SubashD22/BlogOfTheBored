@@ -18,6 +18,7 @@ function Write() {
 
     const token = user.token
     const [loading, setloading] = useState(false)
+    const [category, setCategory] = useState([])
     const [postData, setPostData] = useState({
         Title: '',
         Image: '',
@@ -46,6 +47,10 @@ function Write() {
             formData.append(key, postData[key])
         }
         formData.append('Text', value)
+        category.forEach(c =>
+            formData.append('Categories', c)
+        )
+
         formData.append('Images', images)
             ;
         const config = {
@@ -104,9 +109,21 @@ function Write() {
     if (loading) {
         dis = true
     } else dis = false
+    let categoriesArray = ["fashion", "food", "games", "hobby", "movies", "music", "sports", "story", "travel"];
+    const addCategory = (e, c) => {
+        e.preventDefault()
+        if (!category.includes(c)) {
+            setCategory([...category, c])
+        }
+
+    }
+    const removeCategory = (e, c) => {
+        e.preventDefault();
+        const newCategory = category.filter(cat => cat !== c)
+        setCategory(newCategory)
+    }
     return (
         <>
-
             <form className={style.writeForm} onSubmit={publish}>
                 <div className={style.mainimage}>
                     <input type="file" name="Image" id="main-image" onChange={(e) => mainOnchange(e, 'image')} disabled={dis} />
@@ -118,7 +135,22 @@ function Write() {
                 <div className={style.main}>
                     <input type='text' name='Title' value={Title} onChange={(e) => mainOnchange(e, 'string')} className={style.maintitle} placeholder='Title' required disabled={dis} />
                 </div>
-                <div>
+                <div className={style.categories}>
+                    <div className={style.categorieslist} >
+                        <h3>Categories:</h3>
+                        {categoriesArray.map(c => (<button className={style.categorybtn}
+                            onClick={(e) => addCategory(e, c)}>
+                            {c}</button>))}
+                    </div>
+                    <div className={style.selectedcategories} >
+                        <h3>Selected Categories:</h3>
+                        {category.map(c => (<button className={style.categorybtn}
+                            onClick={(e) => removeCategory(e, c)}>
+                            {c}</button>))}
+                    </div>
+
+                </div>
+                <div className={style.quill}>
                     <ReactQuill ref={quillRef} value={value} name='Text' onChange={setValue} placeholder='content...' modules={modules} />
                 </div>
                 <div style={{

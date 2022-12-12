@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { useQuery } from 'react-query';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import style from './User.module.css'
 
 const User = () => {
     const { user } = useSelector((state) => state.auth);
@@ -13,25 +14,18 @@ const User = () => {
             navigate('/login')
         }
     }, [user, navigate])
-    const Verify = async () => {
-        const config = {
-            headers: {
-                Authorization: `Bearer ${user.token}`,
-            }
-        }
-        const message = await axios.get('http://localhost:5000/api/verify', config);
-        if (message) {
-            alert(message.data.message)
-        }
-    }
     return (
-        <div>
+        <div className={style.userContainer}>
+            <div className={style.userCard}>
+                <div className={style.profilePic}>
+                    <div className={style.dpcontainer}>
+                        <img src={user.profilePic} alt="" className={style.dpImg} />
+                    </div>
+                </div>
+            </div>
             <h1>{user?.username}</h1>
             <p>{user?.email}</p>
-            {user.verified ? (<p>Verified</p>) : (<div>
-                <p>Not verified</p>
-                <button onClick={Verify}>Verify</button>
-            </div>)}
+            <button>Change Password</button>
         </div>
     )
 }

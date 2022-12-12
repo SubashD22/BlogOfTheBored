@@ -40,11 +40,13 @@ const getpost = asyncHandler(async(req,res)=>{
     }
 })
 const newpost = (asyncHandler(async(req,res)=>{
-    const{Title,Text} = req.body
+    const{Title,Text,Categories:categories} = req.body
+    console.log(categories)
     if(req.files.Image){
         const post = await BlogPost.create({
             title:Title,
             text:Text,
+            categories,
             image:req.files.Image[0].path,
             imageId:req.files.Image[0].filename,
             images:req.body.Images,

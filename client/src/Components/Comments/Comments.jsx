@@ -1,11 +1,14 @@
 import axios from 'axios'
-import React from 'react'
+import React, { useState } from 'react'
 import { useSelector } from 'react-redux';
 import style from "./Comments.module.css"
 
 
 const Comments = ({ comments, refetch }) => {
     const { user } = useSelector((state) => state.auth);
+    const [edit, setEdit] = useState(false);
+    const [comment, setComment] = useState('');
+
     const deleteComment = async (id) => {
         const config = {
             headers: {
@@ -16,6 +19,24 @@ const Comments = ({ comments, refetch }) => {
         if (response) {
             return refetch()
         }
+    }
+    const updateComment = async (id) => {
+        const config = {
+            headers: {
+                Authorization: `Bearer ${user.token}`,
+            }
+        }
+        const data = {
+            text: comment
+        }
+        const response = await axios.put(`http://localhost:5000/api/comments/${id}`, data, config);
+        if (response) {
+            setEdit(false)
+            return refetch()
+        }
+    }
+    const editComment = (e) => {
+        setComment(e.target.value)
     }
     return (
         <div className={style.commentthread}>
@@ -34,11 +55,20 @@ const Comments = ({ comments, refetch }) => {
                         </div>
 
                         <div className={style.commentbody}>
-                            <p>
-                                {c.comment}
-                            </p>
-                            {user?.email === c.author.email ? (<><button style={{ display: "inline-block" }}>EDIT</button>
-                                <button style={{ display: "inline-block", marginLeft: "0.5rem" }} onClick={() => deleteComment(c._id)}>DELETE</button></>) : <></>}
+                            {edit ? <input type='text' name='comment' value={comment} onChange={editComment} /> : <p>{c.comment}</p>}
+
+                            {user?.email === c.author.email ? (<>{edit ? <button style={{ display: "inline-block" }}
+                                onClick={() => {
+                                    setEdit(false)
+                                }}>CANCEL</button> :
+                                <button style={{ display: "inline-block" }}
+                                    onClick={() => {
+                                        setEdit(true);
+                                        setComment(c.comment)
+                                    }}>EDIT</button>}
+                                {edit ? <button style={{ display: "inline-block", marginLeft: "0.5rem" }} onClick={() => updateComment(c._id)}>UPDATE</button>
+                                    : <button style={{ display: "inline-block", marginLeft: "0.5rem" }} onClick={() => deleteComment(c._id)}>DELETE</button>}
+                            </>) : <></>}
 
                         </div>
                     </div>

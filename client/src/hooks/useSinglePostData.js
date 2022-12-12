@@ -11,7 +11,7 @@ export const useSinglePostData = (Id) =>{
     return useQuery(['single-post', Id],fetchData,{
         initialData:()=>{
 
-        const post = queryClient.getQueryData('single-post')?.data?.find(
+        const post = queryClient.getQueryData('allpost')?.data?.find(
          (post)=>post._id === parseInt(Id)
         )
     if(post){
