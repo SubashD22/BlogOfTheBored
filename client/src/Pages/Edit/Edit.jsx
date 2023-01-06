@@ -5,9 +5,11 @@ import { useSinglePostData } from '../../hooks/useSinglePostData';
 import ReactQuill from 'react-quill'
 import 'react-quill/dist/quill.snow.css';
 import axios from 'axios';
+import { useContext } from 'react';
+import { UserContext } from '../../Context/UserContext';
 
 const Edit = () => {
-    const { user } = useSelector((state) => state.auth);
+    const { user } = useContext(UserContext)
     const navigate = useNavigate();
     useEffect(() => {
         if (!user) {

@@ -1,15 +1,13 @@
-import React from 'react'
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
-import { logout, reset } from '../../redux/auth/authSlice'
+import { useUserContext } from '../../Context/UserContext';
+
 import styles from './NavBar.module.css'
 function NavBar() {
-    const { user } = useSelector((state) => state.auth);
-    const dispatch = useDispatch();
+    const { user, logout } = useUserContext();
 
     const logoutfn = () => {
-        dispatch(logout());
-        dispatch(reset());
+        logout()
     }
     return (
         <nav>

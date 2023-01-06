@@ -1,11 +1,12 @@
 import axios from 'axios'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { useSelector } from 'react-redux';
+import { useUserContext } from '../../Context/UserContext';
 import style from "./Comments.module.css"
 
 
 const Comments = ({ comments, refetch }) => {
-    const { user } = useSelector((state) => state.auth);
+    const { user } = useUserContext;
     const [edit, setEdit] = useState(false);
     const [comment, setComment] = useState('');
 

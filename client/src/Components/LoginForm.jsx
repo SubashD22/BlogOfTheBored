@@ -1,40 +1,24 @@
-import axios from 'axios';
 import React, { useState } from 'react'
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { login, reset } from '../redux/auth/authSlice'
 import style from '../Pages/Login/Login.module.css'
+import { useUserContext } from '../Context/UserContext';
 
 function LoginForm() {
+    const { login } = useUserContext()
     const [formData, setformdata] = useState({
         username: '',
         password: ''
     });
     const { username, password } = formData;
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
-    const { user, isLoading, isSuccess, isError, message } = useSelector(
-        (state) => state.auth);
-    useEffect(() => {
-        if (isSuccess || user) {
-            navigate('/')
-        }
-        dispatch(reset())
-    }, [user, isSuccess, dispatch, navigate])
-    const onChange = (e) => {
+    function onChange(e) {
         setformdata((prevData) => ({
             ...prevData,
             [e.target.name]: e.target.value
-        }))
+        }));
     }
     const submit = async (e) => {
         e.preventDefault();
-        const loginData = {
-            username,
-            password
-        }
-        dispatch(login(loginData))
+        login(formData);
     }
     return (
         <div className='formcontent'>

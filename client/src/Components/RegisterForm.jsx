@@ -1,12 +1,13 @@
 import axios from 'axios';
 import React, { useState } from 'react';
-import { register, reset } from '../redux/auth/authSlice'
-import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
 import style from '../Pages/Login/Login.module.css'
+import { useQuery } from 'react-query';
+import { useContext } from 'react';
+import { UserContext } from '../Context/UserContext';
 
 function RegisterForm() {
+    const { setUser } = useContext(UserContext)
     const [formData, setformdata] = useState({
         username: '',
         email: '',
@@ -16,16 +17,22 @@ function RegisterForm() {
     });
     const { username, password, email, image } = formData;
     const navigate = useNavigate();
-    const dispatch = useDispatch();
-    const { user, isLoading, isSuccess, isError, message } = useSelector(
-        (state) => state.auth);
-
-    useEffect(() => {
-        if (isSuccess || user) {
-            navigate('/')
-        };
-        dispatch(reset())
-    }, [user, isSuccess, dispatch, navigate])
+    const onSuccess = () => {
+        const user = localStorage.setItem('user', JSON.stringify(user.data));
+        setUser(user)
+        navigate('/')
+    }
+    const { data: user, isError, isLoading, isFetched, refetch } = useQuery('user', () => {
+        const Data = new FormData
+        Data.append("username", username)
+        Data.append("email", email)
+        Data.append("password", password)
+        Data.append("Dp", image)
+        axios.post("http://localhost:5000/api/register", Data)
+    }, {
+        enabled: false,
+        onSuccess: onSuccess
+    });
     const onChange = (e, type) => {
         const value = type === 'image' ? e.target.files[0] : e.target.value
         setformdata((prevData) => ({
@@ -35,12 +42,7 @@ function RegisterForm() {
     }
     const submit = async (e) => {
         e.preventDefault();
-        const Data = new FormData
-        Data.append("username", username)
-        Data.append("email", email)
-        Data.append("password", password)
-        Data.append("Dp", image)
-        dispatch(register(Data))
+        refetch()
     }
     return (
         <div className='formcontent'>

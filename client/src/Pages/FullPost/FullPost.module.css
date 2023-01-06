@@ -1,4 +1,4 @@
-.postcontainer{
+/*.postcontainer{
     width: 100%;
     max-width: 1068px;
     margin: auto;
@@ -80,4 +80,101 @@
 }
 .commentform button{
     font-weight: 600;
+}
+/* new */
+.content{
+    background-color: #f2f2f2;
+    padding-top: 8.4rem;
+    padding-bottom: 0;
+}
+.content .standardrow{
+    max-width: 960px;
+}
+.contentheader{
+    padding-bottom: 3rem;
+    text-align: center;
+    width: 100%;
+}
+.contentheader h1{
+    font-size: 4.8rem;
+    line-height: 1.25;
+    margin-top: 0;
+    letter-spacing: -.15rem;
+}
+.media{
+    padding: 0;
+    margin-top: 4.8rem;
+    width: 100%;
+}
+.media img{
+    vertical-align: bottom;
+}
+.media , .thumb{
+    position:relative
+}
+.maincontent{
+    width: 100%;
+    margin-top: 6rem;
+    padding-left: 6rem;
+    padding-right: 6rem;
+}
+.maincontent img {
+    max-width: 960px;
+    margin: 0 0 3rem -3rem;
+}
+.maincontent h1 {
+    margin-top: 3rem;
+}
+.categories{
+    margin-top: 6rem;
+    padding-left: 6rem;
+    padding-right: 6rem;
+    width: 100%;
+    font-family: "metropolis-regular", sans-serif;
+}
+.categories span {
+    font-family: "metropolis-bold", sans-serif;
+   color: #151515;
+   position: relative;
+   padding-right: 55px;
+   margin-right: 1.5rem;
+   margin-top: 1.2rem;
+}
+.categories span::after{
+    display: inline-block;
+    content: "";
+    height: 1px;
+    width: 40px;
+    background-color: rgba(0, 0, 0, 0.2);
+    position: absolute;
+    top: 50%;
+    right: 0;
+}
+.categories .categorylist{
+    display: inline-block;
+    padding-right: 0;
+    margin-right: 0;
+}
+.categories .categorylist::after{
+    display: none;
+}
+.categories .categorylist a {
+    font-family: "metropolis-regular", sans-serif;
+   font-size: 1.3rem;
+   line-height: inherit;
+   color: #7f7f7f;
+   border: 1px solid rgba(0, 0, 0, 0.3);
+   border-radius: 3px;
+   margin-right: 6px;
+   margin-bottom: 6px;
+   padding: 0 10px;
+}
+.categories .categorylist a:hover,
+.categories .categorylist a:focus{
+    background-color: #000000;
+   border-color: #000000;
+   color: #ffffff;
+}
+.categories .categorylist a:last-child{
+    margin-right:0;
 }

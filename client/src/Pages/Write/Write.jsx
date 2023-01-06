@@ -1,15 +1,16 @@
 import axios from 'axios';
-import React, { useMemo, useRef, useState } from 'react'
+import React, { useContext, useMemo, useRef, useState } from 'react'
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import ReactQuill from 'react-quill'
 import 'react-quill/dist/quill.snow.css';
 import style from './Write.module.css'
+import { useUserContext } from '../../Context/UserContext';
 
 function Write() {
     const navigate = useNavigate()
-    const { user } = useSelector((state) => state.auth)
+    const { user } = useUserContext()
     useEffect(() => {
         if (!user) {
             navigate('/login')

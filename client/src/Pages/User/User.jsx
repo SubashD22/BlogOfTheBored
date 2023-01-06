@@ -3,12 +3,13 @@ import React from 'react'
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { useQuery } from 'react-query';
-import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import style from './User.module.css'
+import { useContext } from 'react';
+import { UserContext } from '../../Context/UserContext';
 
 const User = () => {
-    const { user } = useSelector((state) => state.auth);
+    const { user } = useContext(UserContext)
     const navigate = useNavigate()
     useEffect(() => {
         if (!user) {
@@ -28,6 +29,9 @@ const User = () => {
         newPassword: '',
         changePassword: false
     })
+    const updateUser = () => {
+
+    }
     return (
         <div className={style.userContainer}>
             <div className={style.userCard}>
@@ -83,7 +87,19 @@ const User = () => {
                         })
                     }}>Edit</button>}
             </div>
-            <button>Change Password</button>
+            <button onClick={() => {
+                setPassword({
+                    password: '',
+                    newPassword: '',
+                    changePassword: !Password.changePassword
+                })
+            }}>{Password.changePassword ? "Cancel" : "Change Password"}</button>
+            {Password.changePassword ? <form>
+                <input type="password" name="oldPassword" />
+                <input type="password" name="newPassword" />
+                <button type='submit'>Submit</button>
+            </form> : <></>}
+
         </div>
     )
 }
